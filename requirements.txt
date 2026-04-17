@@ -1,0 +1,7 @@
+flask
+numpy==1.24.3
+pillow
+tensorflow-cpu==2.13.0
+gunicorn
+gdown
+scipy

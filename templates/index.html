@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crop AI 🌱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>🌿 Crop Disease Detection</h1>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required><br>
+        <button onclick="showLoader()">🔍 Detect Disease</button>
+
+    <select name="lang">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+    </select><br><br>
+
+    </form>
+</div>
+<div id="loader" style="display:none;">
+    <p>Processing... 🤖</p>
+</div>
+<script>
+function showLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+</script>
+</body>
+</html>

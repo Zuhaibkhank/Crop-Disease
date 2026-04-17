@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+        }
+
+        h2 {
+            margin-top: 15px;
+        }
+
+        p {
+            color: #444;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        a:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>🧠 Prediction Result</h1>
+
+    <img src="{{ img_path }}"> 
+    
+
+    <h2>Disease: {{ prediction.replace("___"," ").replace("_"," ") }}</h2>
+
+    <p>{{ info }}</p>
+
+    <a href="/">⬅️ Try Another</a>
+</div>
+<script>
+    let text = "{{ info }}";
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.lang = "hi-IN";
+    window.speechSynthesis.speak(speech);
+</script>
+
+</body>
+</html>
