@@ -1,12 +1,11 @@
 import os
-
-# Fix for Keras version compatibility — must be set BEFORE importing tensorflow
 os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
-from flask import Flask, render_template, request
 import tensorflow as tf
+import tf_keras
 import numpy as np
 from PIL import Image
+from flask import Flask, render_template, request
 import gdown
 
 MODEL_PATH = "model/crop_model.keras"
@@ -15,24 +14,24 @@ MODEL_PATH = "model/crop_model.keras"
 if not os.path.exists(MODEL_PATH):
     print("Downloading model...")
     os.makedirs("model", exist_ok=True)
-
     url = "https://drive.google.com/uc?id=1Pk--I6eXVErjViq0uGO_BoiE_zRNxeqW"
     gdown.download(url, MODEL_PATH, quiet=False)
     print("Model downloaded!")
 
 print("Loading model...")
 try:
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-    print("✅ Model Loaded")
+    model = tf_keras.models.load_model(MODEL_PATH, compile=False)
+    print("✅ Model Loaded with tf_keras")
 except Exception as e:
-    print(f"❌ Model load failed: {e}")
-    raise
+    print(f"tf_keras failed: {e}, trying tf.keras...")
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    print("✅ Model Loaded with tf.keras")
 
 # Load classes
 with open("model/classes.txt") as f:
     class_names = [line.strip() for line in f.readlines()]
 
-print(f"✅ Loaded {len(class_names)} classes")
+print(f"✅ {len(class_names)} classes loaded")
 
 app = Flask(__name__)
 

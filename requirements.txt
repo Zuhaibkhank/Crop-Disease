@@ -2,6 +2,7 @@ flask
 numpy==1.24.3
 pillow
 tensorflow-cpu==2.15.0
+tf-keras
 gunicorn
 gdown
 scipy
