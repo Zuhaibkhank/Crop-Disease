@@ -1,11 +1,12 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
-import tensorflow as tf
-import tf_keras
+# Use tensorflow backend for Keras 3
+os.environ["KERAS_BACKEND"] = "tensorflow"
+
+from flask import Flask, render_template, request
+import keras
 import numpy as np
 from PIL import Image
-from flask import Flask, render_template, request
 import gdown
 
 MODEL_PATH = "model/crop_model.keras"
@@ -19,13 +20,8 @@ if not os.path.exists(MODEL_PATH):
     print("Model downloaded!")
 
 print("Loading model...")
-try:
-    model = tf_keras.models.load_model(MODEL_PATH, compile=False)
-    print("✅ Model Loaded with tf_keras")
-except Exception as e:
-    print(f"tf_keras failed: {e}, trying tf.keras...")
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-    print("✅ Model Loaded with tf.keras")
+model = keras.models.load_model(MODEL_PATH, compile=False)
+print("✅ Model Loaded")
 
 # Load classes
 with open("model/classes.txt") as f:
