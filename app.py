@@ -1,8 +1,12 @@
+import os
+
+# Fix for Keras version compatibility — must be set BEFORE importing tensorflow
+os.environ["TF_USE_LEGACY_KERAS"] = "1"
+
 from flask import Flask, render_template, request
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import os
 import gdown
 
 MODEL_PATH = "model/crop_model.keras"
@@ -14,29 +18,35 @@ if not os.path.exists(MODEL_PATH):
 
     url = "https://drive.google.com/uc?id=1Pk--I6eXVErjViq0uGO_BoiE_zRNxeqW"
     gdown.download(url, MODEL_PATH, quiet=False)
-
     print("Model downloaded!")
 
 print("Loading model...")
-model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-print("✅ Model Loaded")
+try:
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    print("✅ Model Loaded")
+except Exception as e:
+    print(f"❌ Model load failed: {e}")
+    raise
 
 # Load classes
 with open("model/classes.txt") as f:
     class_names = [line.strip() for line in f.readlines()]
+
+print(f"✅ Loaded {len(class_names)} classes")
 
 app = Flask(__name__)
 
 def predict_image(img_path):
     img = Image.open(img_path).convert("RGB")
     img = img.resize((224, 224))
-    img = np.array(img) / 255.0
-    img = np.expand_dims(img, axis=0)
+    img_array = np.array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
 
-    prediction = model.predict(img)
-    index = np.argmax(prediction)
+    prediction = model.predict(img_array)
+    index = int(np.argmax(prediction))
+    confidence = float(np.max(prediction)) * 100
 
-    return class_names[index]
+    return class_names[index], confidence
 
 @app.route('/')
 def home():
@@ -44,16 +54,16 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    file = request.files['image']
+    file = request.files.get('image')
 
-    if file.filename == '':
-        return "No file selected"
+    if not file or file.filename == '':
+        return "No file selected", 400
 
     os.makedirs("static/uploads", exist_ok=True)
     filepath = os.path.join("static/uploads", file.filename)
     file.save(filepath)
 
-    result = predict_image(filepath)
+    result, confidence = predict_image(filepath)
 
     clean_name = result.replace("___", " - ").replace("_", " ")
     info = f"Detected: {clean_name}. Please take proper treatment."
@@ -61,6 +71,8 @@ def predict():
     return render_template(
         "result.html",
         prediction=result,
+        clean_name=clean_name,
+        confidence=round(confidence, 1),
         info=info,
         img_path=filepath
     )
