@@ -5,6 +5,11 @@
 This project is a **Machine Learning based web application** that detects crop diseases from leaf images.
 It helps farmers identify diseases early and take preventive actions.
 
+## 🌐 Live Demo
+
+👉 Try the app here:
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://huggingface.co/spaces/Zuhaibkhank/Crop-Disease)
+
 ---
 
 ## 🚀 Features
