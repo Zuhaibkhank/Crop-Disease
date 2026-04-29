@@ -67,3 +67,6 @@ python app.py
 GitHub: https://github.com/zuhaibkhank
 <img width="1920" height="1080" alt="Screenshot (52)" src="https://github.com/user-attachments/assets/b1cd546e-e4a0-4402-93ca-4ba1a99dd643" />
 
+<img width="1920" height="1080" alt="Screenshot (53)" src="https://github.com/user-attachments/assets/fcfba022-29e1-46a2-99c0-f54a04fe164e" />
+
+
