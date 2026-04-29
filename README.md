@@ -65,4 +65,5 @@ python app.py
 
 **Mohd Zuhaib Khan**
 GitHub: https://github.com/zuhaibkhank
-<img width="1920" height="1020" alt="Screenshot 2026-04-07 201742" src="https://github.com/user-attachments/assets/cd70d43b-4506-4843-8b7f-608d9b655c67" />
+<img width="1920" height="1080" alt="Screenshot (52)" src="https://github.com/user-attachments/assets/b1cd546e-e4a0-4402-93ca-4ba1a99dd643" />
+
