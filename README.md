@@ -26,7 +26,7 @@ It helps farmers identify diseases early and take preventive actions.
 
 * **Frontend:** HTML, CSS
 * **Backend:** Python (Flask)
-* **ML Model:** CNN (PyTorch / TensorFlow – jo use kiya ho)
+* **ML Model:** CNN (TensorFlow)
 * **Libraries:** NumPy, Pandas, OpenCV
 
 ---
